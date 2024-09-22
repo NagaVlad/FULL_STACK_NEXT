@@ -1,0 +1,51 @@
+{
+  "name": "fullstack-next-ts-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.13.0",
+    "@formkit/auto-animate": "^0.8.2",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/joy": "^5.0.0-beta.48",
+    "@mui/material": "^6.1.1",
+    "@prisma/client": "^5.19.1",
+    "@welldone-software/why-did-you-render": "^8.0.3",
+    "argon2": "^0.41.1",
+    "cookie": "^0.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "next": "14.2.13",
+    "next-connect": "^0.13.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-error-boundary": "^4.0.13",
+    "react-toastify": "^10.0.5",
+    "swiper": "^8.4.5",
+    "swr": "^2.2.5"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.6.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "babel-plugin-import": "^1.13.8",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.13",
+    "postcss": "^8",
+    "prisma": "^5.19.1",
+    "sass": "^1.79.3",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
