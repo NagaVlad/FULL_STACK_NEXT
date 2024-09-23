@@ -22,7 +22,7 @@ export default function Home({
       <Typography variant='h4' textAlign='center' py={2}>
         Welcome, {user ? user.username || user.email : 'stranger'}
       </Typography>
-      <Slider slides={blocks} />
+      {/* <Slider slides={blocks} /> */}
       <Box my={2}>
         {blocks.map((block, i) => (
           <Animate.SlideIn

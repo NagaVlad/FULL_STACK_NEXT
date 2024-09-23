@@ -18,10 +18,13 @@ import type {
   InferGetStaticPropsType
 } from 'next'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 export default function ArticlePage({
   news
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+
   return (
     <>
       <CustomHead title={news.title} description={news.text.slice(0, 10)} />
@@ -37,10 +40,10 @@ export default function ArticlePage({
               </Avatar>
             }
             action={
-              <Link href='/about'>
-                <Button aria-label='return to about page'>
+              <Link href='/news'>
+                <Button aria-label='return to news page'>
                   <ArrowBackIosNewIcon fontSize='small' />
-                  <Typography variant='body2'>Back</Typography>
+                  <Typography variant='body2'>Back new page</Typography>
                 </Button>
               </Link>
             }

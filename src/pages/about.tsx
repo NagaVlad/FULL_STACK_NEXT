@@ -5,10 +5,12 @@ import type { NewsArr } from '@/types'
 import { Grid, Typography } from '@mui/material'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 
-export default function About({
-  data
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { news } = data
+// export default function About({
+//   data
+// }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function About() {
+
+  // const { news } = data
 
   return (
     <>
@@ -29,48 +31,39 @@ export default function About({
         voluptate nesciunt nisi veniam modi cupiditate, amet id velit deserunt
         soluta? Ex, voluptate libero.
       </Typography>
-      <Typography variant='h5' textAlign='center' py={2}>
-        News
-      </Typography>
-      <Grid container spacing={2} pb={2}>
-        {news.map((n) => (
-          <Grid item md={6} lg={4} key={n.id}>
-            <Animate.FadeIn>
-              <NewsPreview news={n} />
-            </Animate.FadeIn>
-          </Grid>
-        ))}
-      </Grid>
     </>
   )
 }
 
-export async function getStaticProps(ctx: GetStaticPropsContext) {
-  let data = {
-    news: [] as NewsArr
-  }
+// export async function getStaticProps(ctx: GetStaticPropsContext) {
+//   let data = {
+//     news: [] as NewsArr
+//   }
 
-  try {
-    const response = await fetch(
-      `https://api.jsonbin.io/v3/b/${process.env.JSONBIN_BIN_ID}?meta=false`,
-      {
-        headers: {
-          'X-Master-Key': process.env.JSONBIN_X_MASTER_KEY
-        }
-      }
-    )
-    if (!response.ok) {
-      throw response
-    }
-    data = await response.json()
-  } catch (e) {
-    console.error(e)
-  }
+//   try {
+//     const response = await fetch(
+//       `https://api.jsonbin.io/v3/b/${process.env.JSONBIN_BIN_ID}?meta=false`,
+//       {
+//         headers: {
+//           'X-Master-Key': process.env.JSONBIN_X_MASTER_KEY
+//         }
+//       }
+//     )
+//     if (!response.ok) {
+//       throw response
+//     }
+//     data = await response.json()
 
-  return {
-    props: {
-      data
-    },
-    revalidate: 60 * 60 * 12
-  }
-}
+
+
+//   } catch (e) {
+//     console.error(e)
+//   }
+
+//   return {
+//     props: {
+//       data
+//     },
+//     revalidate: 60 * 60 * 12
+//   }
+// }

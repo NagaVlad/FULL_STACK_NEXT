@@ -9,6 +9,7 @@ export default function ProfileButton() {
   const { user } = useUser()
   const theme = useTheme()
 
+
   const modalContent = user ? <UserPanel /> : <AuthTabs />
 
   return (

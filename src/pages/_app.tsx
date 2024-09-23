@@ -10,36 +10,16 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import type { AppProps } from 'next/app'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ToastContainer } from 'react-toastify'
+import { theme } from './theme'
 import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Montserrat, sans-serif'
-  },
-  components: {
-    MuiListItem: {
-      styleOverrides: {
-        root: {
-          width: 'unset'
-        }
-      }
-    },
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          flexGrow: 'unset'
-        }
-      }
-    }
-  }
-})
 
 const clientSideEmotionCache = createEmotionCache()
 
