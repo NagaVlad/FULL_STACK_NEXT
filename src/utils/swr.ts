@@ -9,7 +9,8 @@ async function fetcher<T>(
   return fetch(input, init).then((res) => res.json())
 }
 
-
+//! ВРОДЕ КАК АНАЛОГ РЕФРЕША
+//!  CHECKAUTH 1.33
 // запрос на получение данных пользователя выполняется один раз
 export function useUser() {
   // утилита возвращает данные пользователя и токен доступа, ошибку и

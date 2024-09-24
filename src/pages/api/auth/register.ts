@@ -54,7 +54,7 @@ const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
 
     res.cookie({
       name: process.env.COOKIE_NAME,
-      value: idToken,
+      value: idToken, //refresh token в куки
       options: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -66,7 +66,7 @@ const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
 
     res.status(200).json({
       user: newUser,
-      accessToken
+      accessToken // accessToken в ответ пользователю 
     })
   } catch (e) {
     console.log(e)

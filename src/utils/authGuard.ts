@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { AuthGuardMiddleware } from '../types'
 
+
+//! АНАЛОГ ИНТЕРСЕПТЕРА НА ПРОВЕРК ТОКЕНА ДЛЯ БЭКА AUTH MIDDLEWARE
 const authGuard: AuthGuardMiddleware = (handler) => async (req, res) => {
   const accessToken = req.headers.authorization?.split(' ')[1]
 
@@ -21,7 +23,7 @@ const authGuard: AuthGuardMiddleware = (handler) => async (req, res) => {
 
   req.userId = decodedToken.userId
 
-  return handler(req, res)
+  return handler(req, res) //!!! ВОТ ТУТ USER_ID из create post authGuard
 }
 
 export default authGuard

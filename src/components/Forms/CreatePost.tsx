@@ -43,6 +43,7 @@ export default function CreatePostForm({ closeModal }: Props) {
       return setErrors({ content: formData.content.length })
     }
 
+
     try {
       const response = await fetch('/api/post', {
         method: 'POST',
@@ -50,7 +51,7 @@ export default function CreatePostForm({ closeModal }: Props) {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
-      })
+      }) //! СЮда на бэке передается user_ID
 
       if (!response.ok) {
         throw response

@@ -9,9 +9,14 @@ import nextConnect from 'next-connect'
 const postsHandler = nextConnect<NextApiRequestWithUserId, NextApiResponse>()
 
 postsHandler.post(async (req, res) => {
+  // на самом деле `authorId` не содержится в теле запроса
+  // он хранится в самом запросе
   const data: Pick<Post, 'title' | 'content' | 'authorId'> = JSON.parse(
     req.body
   )
+  //! ВОТ ТУТ НИЧЕГО НЕ ПОНЯЛ
+  console.log('req.userId', req.userId); //! authGuard
+
 
   if (!checkFields(data, ['title', 'content'])) {
     res.status(400).json({ message: 'Some required fields are missing' })
