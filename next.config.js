@@ -29,6 +29,20 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['images.unsplash.com']
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: '**',
+    //     port: '',
+    //     pathname: '**',
+    //   },
+    //   {
+    //     protocol: 'http',
+    //     hostname: 'localhost',
+    //     port: '5000',
+    //     pathname: 'localhost:5000',
+    //   },
+    // ],
   },
   async headers() {
     return [

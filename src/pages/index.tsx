@@ -1,8 +1,9 @@
 import Animate, { SLIDE_DIRECTION } from '@/components/AnimateIn'
+import UploadForm from '@/components/Forms/Upload'
 import CustomHead from '@/components/Head'
 import Slider from '@/components/Slider'
 import type { Blocks } from '@/types'
-import { useUser } from '@/utils/swr'
+import { usecheckAuth, useUser } from '@/utils/swr'
 import { Box, Grid } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
@@ -23,6 +24,10 @@ export default function Home({
         Welcome, {user ? user.username || user.email : 'stranger'}
       </Typography>
       {/* <Slider slides={blocks} /> */}
+
+
+      <UploadForm closeModal={(() => { })} />
+
       <Box my={2}>
         {blocks.map((block, i) => (
           <Animate.SlideIn
@@ -80,6 +85,7 @@ export default function Home({
 }
 
 export async function getStaticProps(ctx: GetStaticPropsContext) {
+
   let data = {
     blocks: [] as Blocks
   }

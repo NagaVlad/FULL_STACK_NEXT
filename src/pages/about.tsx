@@ -8,6 +8,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 // export default function About({
 //   data
 // }: InferGetStaticPropsType<typeof getStaticProps>) {
+
 export default function About() {
 
   // const { news } = data

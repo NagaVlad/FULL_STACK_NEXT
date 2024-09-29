@@ -17,7 +17,8 @@ export default function ProfileButton() {
       triggerComponent={
         <ListItemButton sx={{ borderRadius: '50%', px: theme.spacing(1) }}>
           <Avatar
-            src={user && user.avatarUrl ? user.avatarUrl : '/img/user.png'}
+            src={user && user?.avatarUrl ? user?.avatarUrl : '/img/user.png'}
+          // src={user && user.avatarUrl ? user.avatarUrl : '/img/user.png'}
           />
         </ListItemButton>
       }

@@ -37,7 +37,7 @@ const userHandler: NextApiHandler = async (req, res) => {
       { userId: user.id },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '1d'
+        expiresIn: '1d' //? '10000'
       }
     )
 

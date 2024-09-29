@@ -48,7 +48,7 @@ const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
       { userId: newUser.id },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '1d'
+        expiresIn: '1d ' //? '10000'
       }
     )
 

@@ -1,6 +1,6 @@
 import type { User } from '@prisma/client'
-import useSWR from 'swr'
 import useSWRImmutable from 'swr/immutable'
+import storageLocal from './storageLocal'
 
 async function fetcher<T>(
   input: RequestInfo | URL,
@@ -9,27 +9,58 @@ async function fetcher<T>(
   return fetch(input, init).then((res) => res.json())
 }
 
-//! ВРОДЕ КАК АНАЛОГ РЕФРЕША
-//!  CHECKAUTH 1.33
-// запрос на получение данных пользователя выполняется один раз
+export function usecheckAuth() {
+  const { data, error, mutate } = useSWRImmutable<any>(
+    'refreshTest',
+    (url) => fetcher('http://localhost:5000/api/refresh', {
+      credentials: 'include',
+      headers: new Headers({ 'content-type': 'application/json', 'withCredentials': 'true' }),
+    }),
+    {
+      onErrorRetry(err, key, config, revalidate, revalidateOpts) {
+        return false
+      },
+      // refreshInterval: 9000, //? Такое же время и что и время жизни ACCESS Токена
+    },
+  )
+
+  if (error || data?.message) {
+
+    console.log(error || data?.message)
+
+    return {
+      userData: undefined,
+      accessToken: undefined,
+      refreshUserData: mutate
+    }
+  }
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // if (typeof window !== "undefined") {
+  //   storageLocal.set('token', data?.accessToken)
+  // }
+
+  return {
+    userData: data?.user,
+    accessToken: data?.accessToken,
+    refreshUserData: mutate
+  }
+}
+
 export function useUser() {
-  // утилита возвращает данные пользователя и токен доступа, ошибку и
-  // функцию инвалидации кэша (метод для мутирования данных, хранящихся в кэше)
   const { data, error, mutate } = useSWRImmutable<any>(
     '/api/auth/user',
     (url) => fetcher(url, { credentials: 'include' }),
     {
       onErrorRetry(err, key, config, revalidate, revalidateOpts) {
         return false
-      }
+      },
+      // refreshInterval: 9000,
     }
   )
 
-  // `error` - обычная ошибка (необработанное исключение)
-  // `data.message` - сообщение о кастомной ошибке, например:
-  // res.status(404).json({ message: 'User not found' })
   if (error || data?.message) {
-    console.log(error || data?.message)
+    // console.log(error || data?.message)
 
     return {
       user: undefined,
