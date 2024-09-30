@@ -5,7 +5,6 @@ import AuthTabs from '../AuthTabs'
 import Modal from '../Modal'
 import UserPanel from '../UserPanel'
 import Image from 'next/image'
-
 import { API_URL_STATIC } from '@/utils/axios'
 
 export default function ProfileButton() {

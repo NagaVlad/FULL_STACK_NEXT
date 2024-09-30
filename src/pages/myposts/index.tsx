@@ -66,7 +66,7 @@ export default function Posts({
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   try {
-    const res = await fetch('http://localhost:5000/api/posts', {
+    const res = await fetch(`${process.env.API_URL}/posts`, {
       method: 'GET',
     })
 

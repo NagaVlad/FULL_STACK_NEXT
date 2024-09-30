@@ -1,11 +1,11 @@
 import useSWRImmutable from 'swr/immutable'
 import storageLocal from './storageLocal'
-import axiosApi from './axios'
+import axiosApi, { API_URL } from './axios'
 
 export function usecheckAuth() {
   const { data, error, mutate } = useSWRImmutable<any>(
     'refreshTest',
-    async (url) => axiosApi.get('http://localhost:5000/api/refresh'),
+    async (url) => axiosApi.get(`${API_URL}/refresh`),
     {
       onErrorRetry(err, key, config, revalidate, revalidateOpts) {
         return false

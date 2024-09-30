@@ -75,7 +75,7 @@ export async function getServerSideProps({
   params
 }: GetServerSidePropsContext<{ id: string }>) {
   try {
-    const res = await fetch(`http://localhost:5000/api/posts/${params?.id}`, {
+    const res = await fetch(`${process.env.API_URL}/posts/${params?.id}`, {
       method: 'GET',
     })
 
