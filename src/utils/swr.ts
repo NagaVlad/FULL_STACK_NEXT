@@ -1,6 +1,7 @@
 import type { User } from '@prisma/client'
 import useSWRImmutable from 'swr/immutable'
 import storageLocal from './storageLocal'
+import axiosApi from './axios'
 
 async function fetcher<T>(
   input: RequestInfo | URL,
@@ -12,10 +13,11 @@ async function fetcher<T>(
 export function usecheckAuth() {
   const { data, error, mutate } = useSWRImmutable<any>(
     'refreshTest',
-    (url) => fetcher('http://localhost:5000/api/refresh', {
-      credentials: 'include',
-      headers: new Headers({ 'content-type': 'application/json', 'withCredentials': 'true' }),
-    }),
+    async (url) => axiosApi.get('http://localhost:5000/api/refresh'),
+    // (url) => fetcher('http://localhost:5000/api/refresh', {
+    //   credentials: 'include',
+    //   headers: new Headers({ 'content-type': 'application/json', 'withCredentials': 'true' }),
+    // }),
     {
       onErrorRetry(err, key, config, revalidate, revalidateOpts) {
         return false
@@ -26,7 +28,7 @@ export function usecheckAuth() {
 
   if (error || data?.message) {
 
-    console.log(error || data?.message)
+    console.log('error || data?.message', error)
 
     return {
       userData: undefined,
@@ -35,10 +37,9 @@ export function usecheckAuth() {
     }
   }
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // if (typeof window !== "undefined") {
-  //   storageLocal.set('token', data?.accessToken)
-  // }
+  if (typeof window !== "undefined") {
+    storageLocal.set('token', data?.data.accessToken ?? null)
+  }
 
   return {
     userData: data?.user,
@@ -55,7 +56,6 @@ export function useUser() {
       onErrorRetry(err, key, config, revalidate, revalidateOpts) {
         return false
       },
-      // refreshInterval: 9000,
     }
   )
 

@@ -114,7 +114,7 @@ export default function RegisterForm({ closeModal }: Props) {
     storageLocal.set('isAuth', true) //ЕСТЬ ВАРИАНТ в глобальное хранилище
     storageLocal.set('userInfo', result?.user) //ЕСТЬ ВАРИАНТ в глобальное хранилище
 
-    refreshUserData()
+    refreshUserData() //!!!!!!!!!  ВЕРНУТЬ!!!!!!!!!!!!!!!!!
   }
 
 
@@ -155,7 +155,7 @@ export default function RegisterForm({ closeModal }: Props) {
     //   credentials: 'include', //!!!!!!!!!!!
     // })
 
-    const res = await axiosApi.post('/logout')
+    await axiosApi.post('/logout')
       .then((res) => {
         if (res?.status === 200) {
           storageLocal.remove('token')

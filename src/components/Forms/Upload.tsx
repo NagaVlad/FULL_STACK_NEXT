@@ -51,10 +51,9 @@ export default function UploadForm({ closeModal }: Props) {
     }
   }
 
-
-  console.log('userData', `${API_URL_STATIC}${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/img/user.png'}`);
-
-  if (!userData?.id) return null
+  //*todo
+  // console.log('userData', `${API_URL_STATIC}${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/img/user.png'}`);
+  // if (!userData?.id) return null
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     if (!file) return
@@ -71,14 +70,9 @@ export default function UploadForm({ closeModal }: Props) {
     try {
       const res = await axiosApi.post('/upload', formData)
 
-      // refreshUserData()
-
       if (!Boolean(res.status === 200)) {
         throw res
       }
-
-      // const user = await res?.data
-      // mutate({ user })
 
       if (closeModal) {
         closeModal()

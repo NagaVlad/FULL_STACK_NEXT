@@ -1,5 +1,4 @@
 import axios from 'axios';
-import storageLocal from './storageLocal';
 
 export const API_URL = 'http://localhost:5000/api/'
 export const API_URL_STATIC = 'http://localhost:5000/'
@@ -9,8 +8,9 @@ export const axiosApi = axios.create({
    baseURL: API_URL
 });
 
-axiosApi.interceptors.request.use((config) => {
-   const accessToken = storageLocal.get('token')
+axiosApi.interceptors.request.use(async (config) => {
+   //@ts-ignore
+   const accessToken = localStorage?.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null;
 
    config.headers.Authorization = `Bearer ${accessToken}`
 
@@ -20,17 +20,23 @@ axiosApi.interceptors.request.use((config) => {
 axiosApi.interceptors.response.use((config) => {
    return config
 }, async (err) => {
+
    const originalRequest = err.config
-   if (err.response.status === 401) {
+
+   // console.log('err!!!!!!!!!!!!!!!!!!!!!!!!', err.request.responseURL !== 'http://localhost:5000/api/refresh');
+
+   if (err.response.status === 401 && err.request.responseURL !== 'http://localhost:5000/api/refresh') {
+
       try {
          const result = await axios.get(`${API_URL}/refresh`, {
             withCredentials: true
          })
 
-         storageLocal.set('token', result?.data?.accessToken)
+         localStorage.setItem('token', JSON.stringify(result?.data?.accessToken));
 
          return axiosApi.request(originalRequest)
-      } catch (e) {
+      }
+      catch (e) {
          console.log('ERROR 401');
       }
    }
