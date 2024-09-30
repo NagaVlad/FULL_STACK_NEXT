@@ -1,8 +1,9 @@
 import { usecheckAuth, useUser } from '@/utils/swr'
-import { Avatar, Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
 import axiosApi, { API_URL_STATIC } from '@/utils/axios'
+import Image from 'next/image'
 
 type Props = {
   closeModal?: () => void
@@ -12,7 +13,7 @@ export default function UploadForm({ closeModal }: Props) {
   const previewRef = useRef<HTMLImageElement | null>(null)
   const [file, setFile] = useState<File>()
   const { user, accessToken, mutate } = useUser()
-  const { userData } = usecheckAuth()
+  const { userData, refreshUserData } = usecheckAuth()
 
   const handleSubmitLocal: React.FormEventHandler<HTMLFormElement> = async (e) => {
     if (!file) return
@@ -51,6 +52,7 @@ export default function UploadForm({ closeModal }: Props) {
     }
   }
 
+
   //*todo
   // console.log('userData', `${API_URL_STATIC}${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/img/user.png'}`);
   // if (!userData?.id) return null
@@ -77,6 +79,8 @@ export default function UploadForm({ closeModal }: Props) {
       if (closeModal) {
         closeModal()
       }
+
+      refreshUserData()
     } catch (e) {
       console.error(e)
     }
@@ -86,8 +90,10 @@ export default function UploadForm({ closeModal }: Props) {
     if (e.target.files && previewRef.current) {
       const _file = e.target.files[0]
       setFile(_file)
-      const img = previewRef.current.children[0] as HTMLImageElement
+      const img = previewRef?.current
+
       img.src = URL.createObjectURL(_file)
+
       img.onload = () => {
         URL.revokeObjectURL(img.src)
       }
@@ -110,8 +116,7 @@ export default function UploadForm({ closeModal }: Props) {
           <label htmlFor='avatar'>
             <Button component='span'>Choose file</Button>
           </label>
-          <Avatar alt='preview' ref={previewRef} src={`${API_URL_STATIC}/${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/img/user.png'}`} />
-          <img src={`https://avatars.dzeninfra.ru/get-zen_doc/3703431/pub_604dab410a7d51654a046043_604db7a16c861f010765b84d/scale_1200`} />
+          <Image alt='preview' width={50} height={50} ref={previewRef} src={`${API_URL_STATIC}/${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/1727466258624.png'}`} />
           <Button
             type='submit'
             variant='contained'

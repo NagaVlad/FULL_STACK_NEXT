@@ -26,23 +26,27 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
-  reactStrictMode: true,
+  env: {
+    PUBLIC_URL: '/',
+  },
+  reactStrictMode: false,
   images: {
-    domains: ['images.unsplash.com']
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: '**',
-    //     port: '',
-    //     pathname: '**',
-    //   },
-    //   {
-    //     protocol: 'http',
-    //     hostname: 'localhost',
-    //     port: '5000',
-    //     pathname: 'localhost:5000',
-    //   },
-    // ],
+
+    domains: ['localhost', 'images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: 'http/localhost:3000/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '5000',
+        pathname: 'http/localhost:5000/**',
+      },
+    ],
   },
   async headers() {
     return [

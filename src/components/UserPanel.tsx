@@ -1,6 +1,7 @@
 import { Divider } from '@mui/material'
-import LogoutButton from './Buttons/Logout'
+// import LogoutButton from './Buttons/Logout' //????
 import UploadForm from './Forms/Upload'
+import LogoutButton from './Buttons/LogoutMy'
 
 type Props = {
   closeModal?: () => void

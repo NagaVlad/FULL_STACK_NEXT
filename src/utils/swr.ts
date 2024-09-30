@@ -42,8 +42,8 @@ export function usecheckAuth() {
   }
 
   return {
-    userData: data?.user,
-    accessToken: data?.accessToken,
+    userData: data?.data?.user,
+    accessToken: data?.data?.accessToken,
     refreshUserData: mutate
   }
 }

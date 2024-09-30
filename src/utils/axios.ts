@@ -23,9 +23,8 @@ axiosApi.interceptors.response.use((config) => {
 
    const originalRequest = err.config
 
-   // console.log('err!!!!!!!!!!!!!!!!!!!!!!!!', err.request.responseURL !== 'http://localhost:5000/api/refresh');
 
-   if (err.response.status === 401 && err.request.responseURL !== 'http://localhost:5000/api/refresh') {
+   if (err.response?.status === 401 && err.request.responseURL !== 'http://localhost:5000/api/refresh') {
 
       try {
          const result = await axios.get(`${API_URL}/refresh`, {

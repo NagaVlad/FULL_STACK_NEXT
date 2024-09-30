@@ -1,58 +1,93 @@
-import Animate from '@/components/AnimateIn'
+import CreateMyPostButton from '@/components/Buttons/CreateMyPost'
 import CreatePostButton from '@/components/Buttons/CreatePost'
 import CustomHead from '@/components/Head'
-import PostPreview from '@/components/PostPreview'
-import axiosApi from '@/utils/axios'
-import prisma from '@/utils/prisma'
-import { Divider, Grid, Typography } from '@mui/material'
+import { usecheckAuth } from '@/utils/swr'
+import { Box, Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Typography, } from '@mui/material'
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType
 } from 'next'
+import Link from 'next/link'
+
+// id
+// createdAt
+// date
+// text
+// title
+// updatedAt
+// user_id
+
 
 export default function Posts({
   posts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { userData } = usecheckAuth()
 
-
-  console.log('posts', posts);
 
   return (
     <>
       <CustomHead title='Blog Page' description='This is Blog Page' />
-      <CreatePostButton />
+      <CreateMyPostButton />
       <Divider />
       <Typography variant='h4' textAlign='center' py={2}>
-        My Posts
+        ВСЕ ПОСТЫ
       </Typography>
-      {/* {posts.length ? (
-        <Grid container spacing={2} pb={2}>
-          {posts.map((post) => (
-            <Grid item md={6} lg={4} key={post.id}>
-              <Animate.FadeIn>
-                <PostPreview post={post} />
-              </Animate.FadeIn>
-            </Grid>
+      {posts.length ? (
+        <Grid container spacing={2} pb={2} gap={2} mt={2}>
+          {posts.map((post: any) => (
+            <Card>
+              <CardHeader title={post.title} subheader={post.createdAt} />
+              <CardContent>
+                <Typography variant='body2' color='text.secondary'>
+                  {post.text}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Box display='flex' justifyContent='space-between' width='100%'>
+                  <Link href={`myposts/${post.id}`}>
+                    <Button>
+                      <Typography variant='body2'>More</Typography>
+                    </Button>
+                  </Link>
+
+                  <Box display='flex' gap={1}>
+
+                    {userData?.id === post?.user_id ? <Button>Edit</Button> : null}
+                    {userData?.id === post?.user_id ? <Button>Remove</Button> : null}
+                    {/* {userData} */}
+                    {/* <LikePostButton post={post} /> */}
+                    {/* {isPostBelongsToUser && (
+                      <>
+                        <EditPostButton post={post} />
+                        <RemovePostButton postId={post.id} authorId={post.authorId} />
+                      </>
+                    )} */}
+                  </Box>
+                </Box>
+              </CardActions>
+            </Card>
           ))}
         </Grid>
+
+
       ) : (
         <Typography mt={2}>There are no posts yet</Typography>
-      )} */}
+      )}
     </>
   )
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   try {
-    // const res = await axiosApi.get('http://localhost:5000/api/posts')
-    const res = await fetch('http://localhost:5000/api/posts')
+    const res = await fetch('http://localhost:5000/api/posts', {
+      method: 'GET',
+    })
 
-    console.log('res1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', res);
-
+    const posts = await res.json()
 
     return {
       props: {
-        posts: []
+        posts: posts
       }
     }
 
@@ -65,3 +100,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
   }
 }
+
+
+
+

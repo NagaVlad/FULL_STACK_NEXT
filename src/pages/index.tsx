@@ -1,7 +1,5 @@
 import Animate, { SLIDE_DIRECTION } from '@/components/AnimateIn'
-import UploadForm from '@/components/Forms/Upload'
 import CustomHead from '@/components/Head'
-import Slider from '@/components/Slider'
 import type { Blocks } from '@/types'
 import { usecheckAuth, useUser } from '@/utils/swr'
 import { Box, Grid } from '@mui/material'
@@ -16,6 +14,7 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { blocks } = data
   const { user } = useUser()
+  const { userData } = usecheckAuth()
 
   return (
     <>
@@ -24,9 +23,6 @@ export default function Home({
         Welcome, {user ? user.username || user.email : 'stranger'}
       </Typography>
       {/* <Slider slides={blocks} /> */}
-
-
-      <UploadForm closeModal={(() => { })} />
 
       <Box my={2}>
         {blocks.map((block, i) => (

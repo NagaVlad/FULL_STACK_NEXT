@@ -1,9 +1,11 @@
+import EditMyPostButton from '@/components/Buttons/EditMyPost'
 import EditPostButton from '@/components/Buttons/EditPost'
 import LikePostButton from '@/components/Buttons/LikePost'
+import RemoveMyPostButton from '@/components/Buttons/RemoveMyPost'
 import RemovePostButton from '@/components/Buttons/RemovePost'
 import CustomHead from '@/components/Head'
 import prisma from '@/utils/prisma'
-import { useUser } from '@/utils/swr'
+import { usecheckAuth, useUser } from '@/utils/swr'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import {
   Avatar,
@@ -22,21 +24,21 @@ import type {
 } from 'next'
 import Link from 'next/link'
 
-export default function PostPage({
+export default function MyPostPage({
   post
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { user } = useUser()
-  const isPostBelongsToUser = user && user.id === post.authorId
 
+
+  // const isPostBelongsToUser = user && user.id === post.authorId
   return (
     <>
-      <CustomHead title={post.title} description={post.content.slice(0, 10)} />
+      <CustomHead title={post.title} description={post.text.slice(0, 10)} />
       <Box py={2}>
         <Card>
           <CardHeader
-            avatar={<Avatar src={post.author.avatarUrl || '/img/user.png'} />}
+            avatar={<Avatar src={'/img/user.png'} />}
             action={
-              <Link href='/posts'>
+              <Link href='/myposts'>
                 <Button aria-label='return to about page'>
                   <ArrowBackIosNewIcon fontSize='small' />
                   <Typography variant='body2'>Back</Typography>
@@ -53,21 +55,21 @@ export default function PostPage({
             alt=''
           />
           <CardContent>
-            <Typography variant='body1'>{post.content}</Typography>
+            <Typography variant='body1'>{post.text}</Typography>
           </CardContent>
           <CardActions>
             <Box display='flex' justifyContent='flex-end' gap={2} width='100%'>
               <LikePostButton post={post} />
-              {isPostBelongsToUser && (
-                <>
-                  <EditPostButton post={post} icon={false} />
-                  <RemovePostButton
-                    postId={post.id}
-                    authorId={post.authorId}
-                    icon={false}
-                  />
-                </>
-              )}
+              {/* {isPostBelongsToUser && ( */}
+              <>
+                <EditMyPostButton post={post} icon={false} />
+                <RemoveMyPostButton
+                  postId={post.id}
+                  userId={post.user_id}
+                  icon={false}
+                />
+              </>
+              {/* )} */}
             </Box>
           </CardActions>
         </Card>
@@ -80,21 +82,13 @@ export async function getServerSideProps({
   params
 }: GetServerSidePropsContext<{ id: string }>) {
   try {
-    const post = await prisma.post.findUnique({
-      where: {
-        id: params?.id
-      },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        author: true,
-        authorId: true,
-        likes: true,
-        createdAt: true
-      }
+    const res = await fetch(`http://localhost:5000/api/posts/${params?.id}`, {
+      method: 'GET',
     })
-    if (!post) {
+
+    const posts = await res.json()
+
+    if (!posts) {
       return {
         notFound: true
       }
@@ -102,8 +96,8 @@ export async function getServerSideProps({
     return {
       props: {
         post: {
-          ...post,
-          createdAt: new Date(post.createdAt).toLocaleDateString()
+          ...posts,
+          // createdAt: new Date(post.createdAt).toLocaleDateString()
         }
       }
     }
