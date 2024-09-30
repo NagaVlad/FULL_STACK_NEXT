@@ -1,5 +1,4 @@
 import CreateMyPostButton from '@/components/Buttons/CreateMyPost'
-import CreatePostButton from '@/components/Buttons/CreatePost'
 import CustomHead from '@/components/Head'
 import { usecheckAuth } from '@/utils/swr'
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Typography, } from '@mui/material'
@@ -9,20 +8,10 @@ import type {
 } from 'next'
 import Link from 'next/link'
 
-// id
-// createdAt
-// date
-// text
-// title
-// updatedAt
-// user_id
-
-
 export default function Posts({
   posts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userData } = usecheckAuth()
-
 
   return (
     <>
@@ -35,7 +24,7 @@ export default function Posts({
       {posts.length ? (
         <Grid container spacing={2} pb={2} gap={2} mt={2}>
           {posts.map((post: any) => (
-            <Card>
+            <Card key={post.id}>
               <CardHeader title={post.title} subheader={post.createdAt} />
               <CardContent>
                 <Typography variant='body2' color='text.secondary'>
@@ -54,8 +43,6 @@ export default function Posts({
 
                     {userData?.id === post?.user_id ? <Button>Edit</Button> : null}
                     {userData?.id === post?.user_id ? <Button>Remove</Button> : null}
-                    {/* {userData} */}
-                    {/* <LikePostButton post={post} /> */}
                     {/* {isPostBelongsToUser && (
                       <>
                         <EditPostButton post={post} />

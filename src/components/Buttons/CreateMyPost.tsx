@@ -1,10 +1,10 @@
-import { usecheckAuth, useUser } from '@/utils/swr'
+import { usecheckAuth } from '@/utils/swr'
 import { Button } from '@mui/material'
 import { toast } from 'react-toastify'
 import Modal from '../Modal'
-import CreateMyPostForm from '../Forms/CreateMyPost'
+import CreateMyPostForm from '../Forms/CreatePostForm'
 
-export default function () {
+export default function CreatePostForm() {
   const { userData } = usecheckAuth()
 
   const onClick = () => {

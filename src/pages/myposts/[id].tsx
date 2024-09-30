@@ -1,11 +1,6 @@
 import EditMyPostButton from '@/components/Buttons/EditMyPost'
-import EditPostButton from '@/components/Buttons/EditPost'
-import LikePostButton from '@/components/Buttons/LikePost'
 import RemoveMyPostButton from '@/components/Buttons/RemoveMyPost'
-import RemovePostButton from '@/components/Buttons/RemovePost'
 import CustomHead from '@/components/Head'
-import prisma from '@/utils/prisma'
-import { usecheckAuth, useUser } from '@/utils/swr'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import {
   Avatar,
@@ -29,7 +24,6 @@ export default function MyPostPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
 
-  // const isPostBelongsToUser = user && user.id === post.authorId
   return (
     <>
       <CustomHead title={post.title} description={post.text.slice(0, 10)} />
@@ -59,7 +53,6 @@ export default function MyPostPage({
           </CardContent>
           <CardActions>
             <Box display='flex' justifyContent='flex-end' gap={2} width='100%'>
-              <LikePostButton post={post} />
               {/* {isPostBelongsToUser && ( */}
               <>
                 <EditMyPostButton post={post} icon={false} />
@@ -97,7 +90,6 @@ export async function getServerSideProps({
       props: {
         post: {
           ...posts,
-          // createdAt: new Date(post.createdAt).toLocaleDateString()
         }
       }
     }

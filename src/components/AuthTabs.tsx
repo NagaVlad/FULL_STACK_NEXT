@@ -1,10 +1,8 @@
 import storageLocal from '@/utils/storageLocal'
 import { Box, Tab, Tabs } from '@mui/material'
 import { useEffect, useState } from 'react'
-// import LoginForm from './Forms/Login' //????
 import RegisterForm from './Forms/RegisterForm'
 import LoginForm from './Forms/LoginForm'
-// import RegisterForm from './Forms/Register' //????
 
 type TabPanelProps = {
   children?: React.ReactNode
@@ -46,7 +44,6 @@ export default function AuthTabs({ closeModal }: Props) {
 
   useEffect(() => {
     if (storageLocal.get('isAuth')) {
-      // if (storageLocal.get('user_has_been_registered')) { //????
       setTabIndex(1)
     }
     setLoading(false)

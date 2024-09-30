@@ -13,6 +13,7 @@ export default function FormFieldsWrapper({
   ...otherProps
 }: Props) {
   return (
+    //@ts-ignore
     <Box
       component='form'
       display='flex'

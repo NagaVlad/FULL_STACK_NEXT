@@ -1,6 +1,5 @@
-import type { UserResponseData } from '@/types'
 import storageLocal from '@/utils/storageLocal'
-import { usecheckAuth, useUser } from '@/utils/swr'
+import { usecheckAuth } from '@/utils/swr'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import VpnKeyIcon from '@mui/icons-material/VpnKey'
 import {
@@ -37,29 +36,11 @@ export default function LoginForm({ closeModal }: Props) {
     ) as unknown as Pick<User, 'email' | 'password'>
 
     try {
-      // const res = await fetch('/api/auth/login', {
-      //   method: 'POST',
-      //   body: JSON.stringify(formData)
-      // })
-
       const res = await axiosApi.post('/login', formData)
-
-      // if (res.status) {
-      //   switch (res.status) {
-      //     case 404:
-      //       return setErrors({ email: true })
-      //     case 403:
-      //       return setErrors({ password: true })
-      //     default:
-      //       throw res
-      //   }
-      // }
 
       let result = await res?.data
 
-      // if (!storageLocal.get('token')) {
       storageLocal.set('token', result?.accessToken)
-      // }
       storageLocal.set('isAuth', true)
       storageLocal.set('userInfo', result?.user)
 

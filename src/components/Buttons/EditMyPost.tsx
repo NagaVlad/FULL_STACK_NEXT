@@ -2,7 +2,7 @@ import { usecheckAuth } from '@/utils/swr'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Button, IconButton } from '@mui/material'
 import Modal from '../Modal'
-import EditMyPostForm from '../Forms/EditMyPost'
+import EditMyPostForm from '../Forms/EditPostForm'
 
 type Props = {
   post: {

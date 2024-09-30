@@ -1,7 +1,7 @@
 import Animate, { SLIDE_DIRECTION } from '@/components/AnimateIn'
 import CustomHead from '@/components/Head'
 import type { Blocks } from '@/types'
-import { usecheckAuth, useUser } from '@/utils/swr'
+import { usecheckAuth } from '@/utils/swr'
 import { Box, Grid } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
@@ -13,14 +13,13 @@ export default function Home({
   data
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { blocks } = data
-  const { user } = useUser()
   const { userData } = usecheckAuth()
 
   return (
     <>
       <CustomHead title='Home Page' description='This is Home Page' />
       <Typography variant='h4' textAlign='center' py={2}>
-        Welcome, {user ? user.username || user.email : 'stranger'}
+        Welcome, {userData ? userData.email || userData.email : 'stranger'}
       </Typography>
       {/* <Slider slides={blocks} /> */}
 

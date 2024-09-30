@@ -1,4 +1,4 @@
-import { useUser } from '@/utils/swr'
+import { usecheckAuth } from '@/utils/swr'
 import { CssVarsProvider } from '@mui/joy/styles'
 import Textarea from '@mui/joy/Textarea'
 import {
@@ -12,58 +12,64 @@ import {
 } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { useTheme } from '@mui/material/styles'
-import type { Post } from '@prisma/client'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
+import axiosApi from '@/utils/axios'
+
 
 type Props = {
   closeModal?: () => void
+  post: {
+    user_id?: string
+    text?: string
+    date?: string
+    id?: string,
+    title?: string
+  }
 }
 
-export default function CreatePostForm({ closeModal }: Props) {
+export default function EditPostForm({ closeModal, post }: Props) {
   const theme = useTheme()
-  const { user, accessToken } = useUser()
   const router = useRouter()
 
   const [errors, setErrors] = useState<{
-    content?: number
+    text?: number
   }>({})
 
-  if (!user) return null
+  const { userData } = usecheckAuth()
+
+  if (userData?.id !== post.user_id) return null
+
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    if (!user) return
     e.preventDefault()
+
     const formData = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
-    ) as unknown as Pick<Post, 'title' | 'content'>
-
-    if (formData.content.length < 50) {
-      return setErrors({ content: formData.content.length })
+    ) as unknown as any & {
+      user_id?: string
+      text?: string
+      date?: string
+      id?: string,
+      title?: string
     }
 
+    if (formData.text.length < 10) {
+      return setErrors({ text: formData.text.length })
+    }
 
     try {
-      const response = await fetch('/api/post', {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }) //! СЮда на бэке передается user_ID
+      const result = await axiosApi.put(`/edit-post/${post?.id}`, formData)
 
-      if (!response.ok) {
-        throw response
+      if (result.status !== 200) {
+        throw result.statusText
       }
-
-      const post = await response.json()
-
-      router.push(`/posts/${post.id}`)
 
       if (closeModal) {
         closeModal()
       }
+      router.reload()
     } catch (e) {
       console.error(e)
     }
@@ -71,13 +77,14 @@ export default function CreatePostForm({ closeModal }: Props) {
 
   const onInput = () => {
     if (Object.keys(errors).length) {
-      setErrors({ content: undefined })
+      setErrors({ text: undefined })
     }
   }
 
   return (
     <FormFieldsWrapper handleSubmit={handleSubmit}>
-      <Typography variant='h4'>Create post</Typography>
+      <Typography variant='h4'>Edit post</Typography>
+      <input type='hidden' name='postId' defaultValue={post.id} />
       <FormControl required>
         <InputLabel htmlFor='title'>Title</InputLabel>
         <Input
@@ -88,31 +95,37 @@ export default function CreatePostForm({ closeModal }: Props) {
           inputProps={{
             minLength: 3
           }}
+          defaultValue={post.title}
         />
       </FormControl>
       <Box>
         <InputLabel>
-          Content * <Typography variant='body2'>(50 symbols min)</Typography>
+          Content * <Typography variant='body2'>(11 symbols min)</Typography>
           <CssVarsProvider>
             <Textarea
-              name='content'
+              name='text'
               required
               minRows={5}
               sx={{ mt: 1 }}
               onInput={onInput}
-              defaultValue='Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sed dicta eos ratione dolores doloribus magni repellendus aliquid sit dolor harum nemo porro voluptate incidunt quidem, molestias quia cum sequi minima debitis quae magnam est eius quas! Similique, enim non ad facilis dolores nulla corrupti assumenda, harum, ipsa consequuntur pariatur!'
+              defaultValue={post.text}
             />
           </CssVarsProvider>
         </InputLabel>
-        {errors.content && (
+        {errors.text && (
           <FormHelperText sx={{ color: red[500] }}>
-            {50 - errors.content} symbols left
+            {10 - errors.text} symbols left
           </FormHelperText>
         )}
       </Box>
       <Button type='submit' variant='contained' color='success'>
-        Create
+        Update
       </Button>
     </FormFieldsWrapper>
   )
 }
+
+
+// const handleGetUsers = async () => {
+//   await axiosApi.get('/users')
+// }

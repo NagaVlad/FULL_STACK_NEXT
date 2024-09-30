@@ -18,8 +18,6 @@ import type {
   InferGetStaticPropsType
 } from 'next'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import { useRouter } from 'next/router'
 
 export default function ArticlePage({
   news

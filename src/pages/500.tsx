@@ -1,5 +1,5 @@
 import CustomHead from '@/components/Head'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import Image from 'next/image'
 
 export default function Custom500() {

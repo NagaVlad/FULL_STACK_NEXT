@@ -1,4 +1,6 @@
-import { useUser } from '@/utils/swr'
+import FormFieldsWrapper from '@/components/Forms/Wrapper'
+import axiosApi from '@/utils/axios'
+import { usecheckAuth } from '@/utils/swr'
 import { CssVarsProvider } from '@mui/joy/styles'
 import Textarea from '@mui/joy/Textarea'
 import {
@@ -12,61 +14,57 @@ import {
 } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { useTheme } from '@mui/material/styles'
-import type { Post } from '@prisma/client'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import FormFieldsWrapper from './Wrapper'
 
 type Props = {
   closeModal?: () => void
-  post: Omit<Post, 'createdAt' | 'updatedAt'> & {
-    createdAt: string
-  }
+  postId?: string
 }
 
-export default function EditPostForm({ closeModal, post }: Props) {
+export default function CreatePostForm({ closeModal, postId }: Props) {
   const theme = useTheme()
-  const { user, accessToken } = useUser()
+  const { userData, accessToken } = usecheckAuth()
   const router = useRouter()
 
   const [errors, setErrors] = useState<{
-    content?: number
+    text?: number
   }>({})
 
-  if (!user || user.id !== post.authorId) return null
+  if (!userData?.id) return null
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    if (!userData?.id) return
     e.preventDefault()
+
+
     const formData = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
-    ) as unknown as Pick<Post, 'title' | 'content'> & {
-      postId: string
+    ) as unknown as any
+
+    const requestData: any = {
+      ...formData,
+      date: new Date().toLocaleDateString(),
+      userId: userData?.id
     }
 
-    if (formData.content.length < 50) {
-      return setErrors({ content: formData.content.length })
+    if (formData.text.length < 10) {
+      return setErrors({ text: formData.text.length })
     }
 
     try {
-      const response = await fetch('/api/post', {
-        method: 'PUT',
-        body: JSON.stringify(formData),
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+      const result = await axiosApi.post(`/add-post`, requestData)
 
-      if (!response.ok) {
-        throw response
+      if (result.status !== 200) {
+        throw result
       }
-
-      const post = await response.json()
-
-      router.push(`/posts/${post.id}`)
 
       if (closeModal) {
         closeModal()
       }
+
+      router.reload()
+
     } catch (e) {
       console.error(e)
     }
@@ -74,14 +72,13 @@ export default function EditPostForm({ closeModal, post }: Props) {
 
   const onInput = () => {
     if (Object.keys(errors).length) {
-      setErrors({ content: undefined })
+      setErrors({ text: undefined })
     }
   }
 
   return (
     <FormFieldsWrapper handleSubmit={handleSubmit}>
-      <Typography variant='h4'>Edit post</Typography>
-      <input type='hidden' name='postId' defaultValue={post.id} />
+      <Typography variant='h4'>Create post</Typography>
       <FormControl required>
         <InputLabel htmlFor='title'>Title</InputLabel>
         <Input
@@ -92,31 +89,30 @@ export default function EditPostForm({ closeModal, post }: Props) {
           inputProps={{
             minLength: 3
           }}
-          defaultValue={post.title}
         />
       </FormControl>
       <Box>
         <InputLabel>
-          Content * <Typography variant='body2'>(50 symbols min)</Typography>
+          Text * <Typography variant='body2'>(50 symbols min)</Typography>
           <CssVarsProvider>
             <Textarea
-              name='content'
+              name='text'
               required
               minRows={5}
               sx={{ mt: 1 }}
               onInput={onInput}
-              defaultValue={post.content}
+              defaultValue='Lorem ipsum dolor sit amet consectetur adipisicing elit.'
             />
           </CssVarsProvider>
         </InputLabel>
-        {errors.content && (
+        {errors.text && (
           <FormHelperText sx={{ color: red[500] }}>
-            {50 - errors.content} symbols left
+            {10 - errors.text} symbols left
           </FormHelperText>
         )}
       </Box>
       <Button type='submit' variant='contained' color='success'>
-        Update
+        Create
       </Button>
     </FormFieldsWrapper>
   )

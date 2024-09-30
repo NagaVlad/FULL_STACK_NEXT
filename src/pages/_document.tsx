@@ -1,5 +1,3 @@
-import createEmotionCache from '@/utils/createEmotionCache'
-import createEmotionServer from '@emotion/server/create-instance'
 import Document, {
   DocumentContext,
   Head,
@@ -57,34 +55,17 @@ MyDocument.getInitialProps = async (docContext: DocumentContext) => {
 
   const originalRenderPage = docContext.renderPage
 
-  // Кэш Emotion можно распределять между всеми запросами SSR для повышения производительности.
-  // Однако это может иметь глобальные побочные эффекты.
-  const cache = createEmotionCache()
-  const { extractCriticalToChunks } = createEmotionServer(cache)
-
   docContext.renderPage = () =>
     originalRenderPage({
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
-          return <App emotionCache={cache} {...props} />
+          return <App  {...props} />
         }
     })
 
   const docProps = await Document.getInitialProps(docContext)
-  // Важно. Это не позволяет Emotion рендерить невалидный HTML.
-  // См. https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
-  const emotionStyles = extractCriticalToChunks(docProps.html)
-  const emotionStyleTags = emotionStyles.styles.map((style) => (
-    <style
-      data-emotion={`${style.key} ${style.ids.join(' ')}`}
-      key={style.key}
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: style.css }}
-    />
-  ))
 
   return {
     ...docProps,
-    emotionStyleTags
   }
 }

@@ -3,9 +3,6 @@ import Footer from '@/components/Footer'
 import CustomHead from '@/components/Head'
 import Header from '@/components/Header'
 import '@/global.scss'
-import createEmotionCache from '@/utils/createEmotionCache'
-import '@/utils/wdyr'
-import { CacheProvider, EmotionCache } from '@emotion/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -21,47 +18,42 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 
-const clientSideEmotionCache = createEmotionCache()
-
 export default function App({
   Component,
   pageProps,
-  emotionCache = clientSideEmotionCache
-}: AppProps & { emotionCache?: EmotionCache }) {
+}: AppProps) {
   const [animationParent] = useAutoAnimate()
 
   return (
     <>
-      <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <CustomHead
-            title='Default Title'
-            description='This is default description'
-          />
-          <ErrorBoundary
-            FallbackComponent={ErrorFallback}
-            onReset={() => window.location.reload()}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <CustomHead
+          title='Default Title'
+          description='This is default description'
+        />
+        <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onReset={() => window.location.reload()}
+        >
+          <Container
+            maxWidth='xl'
+            sx={{
+              minHeight: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
+            }}
           >
-            <Container
-              maxWidth='xl'
-              sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden'
-              }}
-            >
-              <Header />
-              <Box component='main' flexGrow={1} ref={animationParent}>
-                <Component {...pageProps} />
-              </Box>
-              <Footer />
-            </Container>
-            <ToastContainer autoClose={2000} hideProgressBar theme='colored' />
-          </ErrorBoundary>
-        </ThemeProvider>
-      </CacheProvider>
+            <Header />
+            <Box component='main' flexGrow={1} ref={animationParent}>
+              <Component {...pageProps} />
+            </Box>
+            <Footer />
+          </Container>
+          <ToastContainer autoClose={2000} hideProgressBar theme='colored' />
+        </ErrorBoundary>
+      </ThemeProvider>
     </>
   )
 }
