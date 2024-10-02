@@ -1,17 +1,26 @@
+// 'use client'
 import CreateMyPostButton from '@/components/Buttons/CreateMyPost'
 import CustomHead from '@/components/Head'
 import { usecheckAuth } from '@/utils/swr'
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Typography, } from '@mui/material'
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType
-} from 'next'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
-export default function Posts({
-  posts
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { userData } = usecheckAuth()
+export default async function Posts() {
+  // const { userData } = usecheckAuth()
+
+  // const [state, setState] = useState([])
+
+  // useEffect(() => {
+  //   getData().then((res) => {
+  //     console.log('res', res);
+  //     setState(res)
+  //   })
+  // }, [])
+
+
+  const state = await getData()
+
 
   return (
     <>
@@ -21,9 +30,9 @@ export default function Posts({
       <Typography variant='h4' textAlign='center' py={2}>
         ВСЕ ПОСТЫ
       </Typography>
-      {posts.length ? (
+      {state.length ? (
         <Grid container spacing={2} pb={2} gap={2} mt={2}>
-          {posts.map((post: any) => (
+          {state?.map((post: any) => (
             <Card key={post.id}>
               <CardHeader title={post.title} subheader={post.createdAt} />
               <CardContent>
@@ -41,8 +50,8 @@ export default function Posts({
 
                   <Box display='flex' gap={1}>
 
-                    {userData?.id === post?.user_id ? <Button>Edit</Button> : null}
-                    {userData?.id === post?.user_id ? <Button>Remove</Button> : null}
+                    {/* {userData?.id === post?.user_id ? <Button>Edit</Button> : null}
+                    {userData?.id === post?.user_id ? <Button>Remove</Button> : null} */}
                     {/* {isPostBelongsToUser && (
                       <>
                         <EditPostButton post={post} />
@@ -64,27 +73,25 @@ export default function Posts({
   )
 }
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+export async function getData() {
   try {
-    const res = await fetch(`${process.env.API_URL}/posts`, {
+    const res = await fetch(`http://localhost:5000/api/posts`, {
       method: 'GET',
+      // cache: 'no-store'
+      // next: { revalidate: 30 }
+      next: { tags: ['allPosts'] }
     })
 
     const posts = await res.json()
 
-    return {
-      props: {
-        posts: posts
-      }
+    if (!posts) {
+      return []
     }
+
+    return posts
 
   } catch (e) {
     console.log(e)
-    return {
-      props: {
-        posts: []
-      }
-    }
   }
 }
 

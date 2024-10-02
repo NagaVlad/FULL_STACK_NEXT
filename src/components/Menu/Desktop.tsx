@@ -16,7 +16,7 @@ export default function DesktopMenu({ links }: Props) {
       sx={{
         display: { xs: 'none', sm: 'flex' },
         justifyContent: 'flex-end',
-        paddingInline: theme.spacing(1)
+        paddingInline: theme.spacing(1),
       }}
     >
       {links.map((link, i) => (

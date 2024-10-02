@@ -1,3 +1,4 @@
+'use client'
 import FormFieldsWrapper from '@/components/Forms/Wrapper'
 import axiosApi from '@/utils/axios'
 import { usecheckAuth } from '@/utils/swr'
@@ -14,7 +15,7 @@ import {
 } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { useTheme } from '@mui/material/styles'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 type Props = {
@@ -63,7 +64,7 @@ export default function CreatePostForm({ closeModal, postId }: Props) {
         closeModal()
       }
 
-      router.reload()
+      router.refresh()
 
     } catch (e) {
       console.error(e)

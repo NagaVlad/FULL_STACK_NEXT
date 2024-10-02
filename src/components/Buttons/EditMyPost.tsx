@@ -1,3 +1,4 @@
+'use client'
 import { usecheckAuth } from '@/utils/swr'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Button, IconButton } from '@mui/material'

@@ -1,7 +1,7 @@
 import storageLocal from '@/utils/storageLocal'
 import { Box, Tab, Tabs } from '@mui/material'
 import { useEffect, useState } from 'react'
-import RegisterForm from './Forms/RegisterForm'
+// import RegisterForm from './Forms/RegisterForm'
 import LoginForm from './Forms/LoginForm'
 
 type TabPanelProps = {
@@ -60,7 +60,7 @@ export default function AuthTabs({ closeModal }: Props) {
         </Tabs>
       </Box>
       <TabPanel value={tabIndex} index={0}>
-        <RegisterForm closeModal={closeModal} />
+        {/* <RegisterForm closeModal={closeModal} /> */}
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
         <LoginForm closeModal={closeModal} />

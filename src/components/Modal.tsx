@@ -1,3 +1,4 @@
+'use client'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, Modal as MuiModal } from '@mui/material'
 import { cloneElement, useMemo, useState } from 'react'

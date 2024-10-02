@@ -1,18 +1,16 @@
+'use client'
 import Animate, { SLIDE_DIRECTION } from '@/components/AnimateIn'
 import CustomHead from '@/components/Head'
-import type { Blocks } from '@/types'
 import { usecheckAuth } from '@/utils/swr'
 import { Box, Grid } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Image from 'next/image'
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import block from '../../public/data/home.json'
+import Slider from '@/components/Slider'
 
-export default function Home({
-  data
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { blocks } = data
+export default function Home() {
+  const { blocks } = block
+
   const { userData } = usecheckAuth()
 
   return (
@@ -77,28 +75,4 @@ export default function Home({
       </Box>
     </>
   )
-}
-
-export async function getStaticProps(ctx: GetStaticPropsContext) {
-
-  let data = {
-    blocks: [] as Blocks
-  }
-
-  const dataPath = join(process.cwd(), 'public/data/home.json')
-
-  try {
-    const dataJson = await readFile(dataPath, 'utf-8')
-    if (dataJson) {
-      data = JSON.parse(dataJson)
-    }
-  } catch (e) {
-    console.error(e)
-  }
-
-  return {
-    props: {
-      data
-    }
-  }
 }

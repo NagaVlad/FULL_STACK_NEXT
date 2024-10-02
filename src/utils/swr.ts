@@ -1,3 +1,4 @@
+'use client'
 import useSWRImmutable from 'swr/immutable'
 import storageLocal from './storageLocal'
 import axiosApi, { API_URL } from './axios'

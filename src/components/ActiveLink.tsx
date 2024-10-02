@@ -1,5 +1,6 @@
+'use client'
 import Link, { LinkProps } from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   activeClassName: string
@@ -11,10 +12,9 @@ export default function ActiveLink({
   children,
   ...props
 }: Props) {
-  const { asPath } = useRouter()
+  const path = usePathname()
 
-  const className =
-    asPath === props.href || asPath === props.as ? activeClassName : ''
+  const className = path === props.href || path === props.as ? activeClassName : ''
 
   return (
     <Link className={className} {...props}>

@@ -13,16 +13,10 @@ import {
   CardMedia,
   Typography
 } from '@mui/material'
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType
-} from 'next'
 import Link from 'next/link'
 
-export default function MyPostPage({
-  post
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
+export default async function MyPostPage({ params: { id } }: { params: { id: string } }) {
+  const post = await getPost(id)
 
   return (
     <>
@@ -53,7 +47,6 @@ export default function MyPostPage({
           </CardContent>
           <CardActions>
             <Box display='flex' justifyContent='flex-end' gap={2} width='100%'>
-              {/* {isPostBelongsToUser && ( */}
               <>
                 <EditMyPostButton post={post} icon={false} />
                 <RemoveMyPostButton
@@ -62,7 +55,6 @@ export default function MyPostPage({
                   icon={false}
                 />
               </>
-              {/* )} */}
             </Box>
           </CardActions>
         </Card>
@@ -71,28 +63,19 @@ export default function MyPostPage({
   )
 }
 
-export async function getServerSideProps({
-  params
-}: GetServerSidePropsContext<{ id: string }>) {
+export async function getPost(id: string) {
   try {
-    const res = await fetch(`${process.env.API_URL}/posts/${params?.id}`, {
+    const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
       method: 'GET',
+      next: { tags: ['onePosts'] }
     })
 
     const posts = await res.json()
 
     if (!posts) {
-      return {
-        notFound: true
-      }
+      return []
     }
-    return {
-      props: {
-        post: {
-          ...posts,
-        }
-      }
-    }
+    return posts
   } catch (e) {
     console.error(e)
   }

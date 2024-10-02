@@ -26,8 +26,8 @@ export default function Slider({ slides }: Props) {
       pagination={
         slidesPerView < slides.length
           ? {
-              clickable: true
-            }
+            clickable: true
+          }
           : undefined
       }
       slidesPerView={slidesPerView}

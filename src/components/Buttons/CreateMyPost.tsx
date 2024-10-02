@@ -1,3 +1,4 @@
+'use client'
 import { usecheckAuth } from '@/utils/swr'
 import { Button } from '@mui/material'
 import { toast } from 'react-toastify'

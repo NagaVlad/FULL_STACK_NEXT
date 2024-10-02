@@ -1,3 +1,4 @@
+'use client'
 import { usecheckAuth } from '@/utils/swr'
 import { CssVarsProvider } from '@mui/joy/styles'
 import Textarea from '@mui/joy/Textarea'
@@ -12,10 +13,12 @@ import {
 } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { useTheme } from '@mui/material/styles'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
 import axiosApi from '@/utils/axios'
+import { revalidateTag } from 'next/cache'
+import { revalidateAllPosts, revalidateOnePosts } from '@/app/actions'
 
 
 type Props = {
@@ -65,11 +68,13 @@ export default function EditPostForm({ closeModal, post }: Props) {
       if (result.status !== 200) {
         throw result.statusText
       }
+      revalidateAllPosts()
+      revalidateOnePosts()
 
       if (closeModal) {
         closeModal()
       }
-      router.reload()
+      // router.refresh()
     } catch (e) {
       console.error(e)
     }

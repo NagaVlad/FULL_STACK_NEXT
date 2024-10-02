@@ -11,7 +11,7 @@ import {
   Typography
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { User } from '@prisma/client'
+// import { User } from '@prisma/client'
 import { useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
 import axiosApi from '@/utils/axios'
@@ -33,7 +33,7 @@ export default function LoginForm({ closeModal }: Props) {
     e.preventDefault()
     const formData = Object.fromEntries(
       new FormData(e.target as HTMLFormElement)
-    ) as unknown as Pick<User, 'email' | 'password'>
+    )
 
     try {
       const res = await axiosApi.post('/login', formData)

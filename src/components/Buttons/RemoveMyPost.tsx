@@ -1,8 +1,9 @@
+'use client'
 import axiosApi from '@/utils/axios'
 import { usecheckAuth } from '@/utils/swr'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Button, IconButton } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   postId: string
