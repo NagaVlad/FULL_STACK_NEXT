@@ -1,25 +1,18 @@
-// 'use client'
 import CreateMyPostButton from '@/components/Buttons/CreateMyPost'
 import CustomHead from '@/components/Head'
-import { usecheckAuth } from '@/utils/swr'
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Typography, } from '@mui/material'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import ControlButton from '@/components/Buttons/ControlButton'
+
+// export const dynamic = 'force-dynamic' //!
 
 export default async function Posts() {
   // const { userData } = usecheckAuth()
 
-  // const [state, setState] = useState([])
-
-  // useEffect(() => {
-  //   getData().then((res) => {
-  //     console.log('res', res);
-  //     setState(res)
-  //   })
-  // }, [])
-
-
   const state = await getData()
+
+  // const headersList = headers()
+  // console.log(headersList);
 
 
   return (
@@ -47,25 +40,14 @@ export default async function Posts() {
                       <Typography variant='body2'>More</Typography>
                     </Button>
                   </Link>
-
                   <Box display='flex' gap={1}>
-
-                    {/* {userData?.id === post?.user_id ? <Button>Edit</Button> : null}
-                    {userData?.id === post?.user_id ? <Button>Remove</Button> : null} */}
-                    {/* {isPostBelongsToUser && (
-                      <>
-                        <EditPostButton post={post} />
-                        <RemovePostButton postId={post.id} authorId={post.authorId} />
-                      </>
-                    )} */}
+                    <ControlButton post={post} />
                   </Box>
                 </Box>
               </CardActions>
             </Card>
           ))}
         </Grid>
-
-
       ) : (
         <Typography mt={2}>There are no posts yet</Typography>
       )}
@@ -73,12 +55,23 @@ export default async function Posts() {
   )
 }
 
-export async function getData() {
+export async function generateMetadata() {
+  await getData()
+  return {
+    title: 'Posts',
+  }
+}
+
+async function getData() {
+  const { signal } = new AbortController();
+
   try {
     const res = await fetch(`http://localhost:5000/api/posts`, {
       method: 'GET',
-      // cache: 'no-store'
-      // next: { revalidate: 30 }
+      cache: 'no-store', //!
+      // next: { revalidate: 0 }
+      // next: { tags: ['allPosts'], revalidate: 0 }
+      // signal: signal,
       next: { tags: ['allPosts'] }
     })
 

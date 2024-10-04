@@ -3,8 +3,15 @@ import CustomHead from '@/components/Head'
 import NewsPreview from '@/components/NewsPreview'
 import { Grid, Typography } from '@mui/material'
 import { Key } from 'react'
+import type { News } from '../../types'
 
-export default async function About() {
+export async function generateMetadata() {
+   return {
+      title: 'News',
+   }
+}
+
+export default async function News() {
 
    const data = await getNews()
 
@@ -25,7 +32,7 @@ export default async function About() {
                news?.map((item: { id: Key | null | undefined }) => (
                   <Grid item md={6} lg={4} key={item.id} >
                      {/* <Animate.FadeIn> */}
-                     <NewsPreview news={item} />
+                     <NewsPreview news={item as News} />
                      {/* </Animate.FadeIn> */}
                   </Grid>
                ))
@@ -35,7 +42,7 @@ export default async function About() {
    )
 }
 
-export async function getNews() {
+async function getNews() {
    try {
       const response = await fetch(
          `https://api.jsonbin.io/v3/b/${process.env.JSONBIN_BIN_ID}?meta=false`,

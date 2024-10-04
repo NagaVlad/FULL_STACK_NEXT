@@ -59,7 +59,7 @@ export default async function ArticlePage({ params: { id } }: { params: { id: st
   )
 }
 
-export async function getNews(id: string) {
+async function getNews(id: string) {
   try {
     const response = await fetch(
       `https://api.jsonbin.io/v3/b/${process.env.JSONBIN_BIN_ID}?meta=false`,

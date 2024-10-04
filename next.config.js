@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+
+
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -26,12 +30,22 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  webpack(config, options) {
+    const { dev, isServer } = options;
+
+    // Do not run type checking twice:
+    if (dev && isServer) {
+      config.plugins.push(new ForkTsCheckerWebpackPlugin());
+    }
+
+    return config;
+  },
   typescript: {
-    // !! WARN !!
+    // !!! WARN !!!
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
+    // !!! WARN !!!
+    // ignoreBuildErrors: true,
   },
   env: {
     PUBLIC_URL: '/',

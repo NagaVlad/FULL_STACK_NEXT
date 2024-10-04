@@ -63,7 +63,7 @@ export default async function MyPostPage({ params: { id } }: { params: { id: str
   )
 }
 
-export async function getPost(id: string) {
+async function getPost(id: string) {
   try {
     const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
       method: 'GET',
