@@ -3,7 +3,7 @@ import useSWRImmutable from 'swr/immutable'
 import storageLocal from './storageLocal'
 import axiosApi, { API_URL } from './axios'
 
-export function usecheckAuth() {
+export function useCheckAuth() {
   const { data, error, mutate } = useSWRImmutable<any>(
     'refreshTest',
     async (url) => axiosApi.get(`${API_URL}/refresh`),
@@ -28,6 +28,7 @@ export function usecheckAuth() {
   if (typeof window !== "undefined") {
     storageLocal.set('token', data?.data.accessToken ?? null)
   }
+
 
   return {
     userData: data?.data?.user,

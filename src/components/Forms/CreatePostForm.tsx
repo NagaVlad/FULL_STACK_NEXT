@@ -1,7 +1,7 @@
 'use client'
 import FormFieldsWrapper from '@/components/Forms/Wrapper'
 import axiosApi from '@/utils/axios'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { CssVarsProvider } from '@mui/joy/styles'
 import Textarea from '@mui/joy/Textarea'
 import {
@@ -25,7 +25,7 @@ type Props = {
 
 export default function CreatePostForm({ closeModal, postId }: Props) {
   const theme = useTheme()
-  const { userData, accessToken } = usecheckAuth()
+  const { userData, accessToken } = useCheckAuth()
   const router = useRouter()
 
   const [errors, setErrors] = useState<{

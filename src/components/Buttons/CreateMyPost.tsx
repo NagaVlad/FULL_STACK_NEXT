@@ -1,12 +1,12 @@
 'use client'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { Button } from '@mui/material'
 import { toast } from 'react-toastify'
 import Modal from '../Modal'
 import CreateMyPostForm from '../Forms/CreatePostForm'
 
 export default function CreatePostForm() {
-  const { userData } = usecheckAuth()
+  const { userData } = useCheckAuth()
 
   const onClick = () => {
     toast('Authorization required', {

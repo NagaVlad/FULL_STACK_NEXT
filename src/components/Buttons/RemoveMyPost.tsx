@@ -1,6 +1,6 @@
 'use client'
 import axiosApi from '@/utils/axios'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Button, IconButton } from '@mui/material'
 import { useRouter } from 'next/navigation'
@@ -17,7 +17,7 @@ export default function RemoveMyPostButton({
   icon = true
 }: Props) {
   const router = useRouter()
-  const { userData } = usecheckAuth()
+  const { userData } = useCheckAuth()
 
   if (userData?.id !== userId) return null
 

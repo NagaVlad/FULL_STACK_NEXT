@@ -1,4 +1,4 @@
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { Box, Button, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
@@ -12,7 +12,7 @@ type Props = {
 export default function UploadForm({ closeModal }: Props) {
   const previewRef = useRef<HTMLImageElement | null>(null)
   const [file, setFile] = useState<File>()
-  const { userData, refreshUserData } = usecheckAuth()
+  const { userData, refreshUserData } = useCheckAuth()
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     if (!file) return

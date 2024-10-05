@@ -1,5 +1,5 @@
 import axiosApi from '@/utils/axios'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { Box, Button } from '@mui/material'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function LogoutButton({ closeModal }: Props) {
-  const { refreshUserData } = usecheckAuth()
+  const { refreshUserData } = useCheckAuth()
 
   const onClick = async () => {
     try {

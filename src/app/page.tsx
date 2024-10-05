@@ -1,7 +1,7 @@
 // 'use client'
 import Animate, { SLIDE_DIRECTION } from '@/components/AnimateIn'
 import CustomHead from '@/components/Head'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { Box, Grid } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
@@ -24,7 +24,7 @@ export default async function Home() {
 
   // console.log('blocks', blocks[0]);
 
-  // const { userData } = usecheckAuth()
+  // const { userData } = useCheckAuth()
 
 
   return (

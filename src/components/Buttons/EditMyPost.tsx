@@ -1,5 +1,5 @@
 'use client'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { Button, IconButton } from '@mui/material'
 import Modal from '../Modal'
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function EditMyPostButton({ post, icon = true }: Props) {
-  const { userData } = usecheckAuth()
+  const { userData } = useCheckAuth()
 
   if (userData?.id !== post.user_id) return null
 

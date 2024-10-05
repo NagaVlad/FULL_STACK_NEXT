@@ -1,9 +1,9 @@
 'use client'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { Button } from '@mui/material'
 
 export default function ControlButton({ post }: any) {
-   const { userData } = usecheckAuth()
+   const { userData } = useCheckAuth()
 
    return (
       <>

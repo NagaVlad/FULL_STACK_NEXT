@@ -7,7 +7,7 @@ import ControlButton from '@/components/Buttons/ControlButton'
 // export const dynamic = 'force-dynamic' //!
 
 export default async function Posts() {
-  // const { userData } = usecheckAuth()
+  // const { userData } = useCheckAuth()
 
   const state = await getData()
 
@@ -23,7 +23,7 @@ export default async function Posts() {
       <Typography variant='h4' textAlign='center' py={2}>
         ВСЕ ПОСТЫ
       </Typography>
-      {state.length ? (
+      {state?.length ? (
         <Grid container spacing={2} pb={2} gap={2} mt={2}>
           {state?.map((post: any) => (
             <Card key={post.id}>
@@ -65,27 +65,22 @@ export async function generateMetadata() {
 async function getData() {
   const { signal } = new AbortController();
 
-  try {
-    const res = await fetch(`http://localhost:5000/api/posts`, {
-      method: 'GET',
-      cache: 'no-store', //!
-      // next: { revalidate: 0 }
-      // next: { tags: ['allPosts'], revalidate: 0 }
-      // signal: signal,
-      next: { tags: ['allPosts'] }
-    })
+  const res = await fetch(`http://localhost:5000/api/posts`, {
+    method: 'GET',
+    cache: 'no-store', //!
+    // next: { revalidate: 0 }
+    // next: { tags: ['allPosts'], revalidate: 0 }
+    // signal: signal,
+    next: { tags: ['allPosts'] }
+  })
 
-    const posts = await res.json()
+  const posts = await res.json()
 
-    if (!posts) {
-      return []
-    }
-
-    return posts
-
-  } catch (e) {
-    console.log(e)
+  if (!posts) {
+    return []
   }
+
+  return posts
 }
 
 

@@ -1,5 +1,5 @@
 'use client'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { CssVarsProvider } from '@mui/joy/styles'
 import Textarea from '@mui/joy/Textarea'
 import {
@@ -20,7 +20,6 @@ import axiosApi from '@/utils/axios'
 import { revalidateTag } from 'next/cache'
 import { revalidateAllPosts, revalidateOnePosts } from '@/app/actions'
 
-
 type Props = {
   closeModal?: () => void
   post: {
@@ -40,7 +39,7 @@ export default function EditPostForm({ closeModal, post }: Props) {
     text?: number
   }>({})
 
-  const { userData } = usecheckAuth()
+  const { userData } = useCheckAuth()
 
   if (userData?.id !== post.user_id) return null
 
@@ -69,12 +68,12 @@ export default function EditPostForm({ closeModal, post }: Props) {
         throw result.statusText
       }
       revalidateAllPosts()
+
       revalidateOnePosts()
 
       if (closeModal) {
         closeModal()
       }
-      // router.refresh()
     } catch (e) {
       console.error(e)
     }
@@ -130,7 +129,3 @@ export default function EditPostForm({ closeModal, post }: Props) {
   )
 }
 
-
-// const handleGetUsers = async () => {
-//   await axiosApi.get('/users')
-// }

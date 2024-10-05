@@ -1,4 +1,4 @@
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import { ListItemButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import AuthTabs from '../AuthTabs'
@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { API_URL_STATIC } from '@/utils/axios'
 
 export default function ProfileButton() {
-  const { userData } = usecheckAuth()
+  const { userData } = useCheckAuth()
   const theme = useTheme()
 
 

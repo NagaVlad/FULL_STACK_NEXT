@@ -1,5 +1,5 @@
 import storageLocal from '@/utils/storageLocal'
-import { usecheckAuth } from '@/utils/swr'
+import { useCheckAuth } from '@/utils/swr'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import VpnKeyIcon from '@mui/icons-material/VpnKey'
 import {
@@ -11,7 +11,6 @@ import {
   Typography
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-// import { User } from '@prisma/client'
 import { useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
 import axiosApi from '@/utils/axios'
@@ -22,7 +21,7 @@ type Props = {
 
 export default function LoginForm({ closeModal }: Props) {
   const theme = useTheme()
-  const { refreshUserData } = usecheckAuth()
+  const { refreshUserData } = useCheckAuth()
 
   const [errors, setErrors] = useState<{
     email?: boolean

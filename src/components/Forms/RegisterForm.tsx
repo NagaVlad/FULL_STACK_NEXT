@@ -1,6 +1,6 @@
 // 'use client'
 // import storageLocal from '@/utils/storageLocal'
-// import { usecheckAuth } from '@/utils/swr'
+// import { useCheckAuth } from '@/utils/swr'
 // import MailOutlineIcon from '@mui/icons-material/MailOutline'
 // import VpnKeyIcon from '@mui/icons-material/VpnKey'
 // import {
@@ -25,7 +25,7 @@
 // export default function RegisterForm({ closeModal }: Props) {
 //   const theme = useTheme()
 //   const router = useRouter()
-//   const { refreshUserData } = usecheckAuth()
+//   const { refreshUserData } = useCheckAuth()
 
 //   const [errors, setErrors] = useState<{
 //     email?: boolean
