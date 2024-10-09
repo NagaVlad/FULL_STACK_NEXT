@@ -16,7 +16,6 @@ export default function Ws() {
     webSocket.onmessage = (event) => {
       console.log('onmessage', event.data);
 
-      // console.log('event.data', event.data);
       setUsers(JSON.parse(event.data).users)
     };
 
