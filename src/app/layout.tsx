@@ -1,4 +1,4 @@
-import MyAppProvider from "@/providers"
+import MyAppProvider from "@/providers/appProvider"
 import '@/global.scss'
 
 export const metadata = {

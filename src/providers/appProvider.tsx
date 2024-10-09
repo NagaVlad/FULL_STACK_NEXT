@@ -9,8 +9,8 @@ import { Box, Container } from "@mui/material";
 import Header from "@/components/Header";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ToastContainer } from "react-toastify";
-import { UserContext } from "@/contexts/user/context";
 import { UserContextProvider } from "@/contexts/user/provider";
+import { WSProvider } from "@/contexts/ws/provider";
 
 export default function MyAppProvider({ children }: {
    children: React.ReactNode
@@ -23,23 +23,25 @@ export default function MyAppProvider({ children }: {
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
          >
-            <UserContextProvider>
-               <Container
-                  maxWidth='xl'
-                  sx={{
-                     minHeight: '100vh',
-                     display: 'flex',
-                     flexDirection: 'column',
-                     overflow: 'hidden'
-                  }}
-               >
-                  <Header />
-                  <Box component='main' flexGrow={1} ref={animationParent}>
-                     {children}
-                  </Box>
-                  <Footer />
-               </Container>
-            </UserContextProvider>
+            <WSProvider>
+               <UserContextProvider>
+                  <Container
+                     maxWidth='xl'
+                     sx={{
+                        minHeight: '100vh',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden'
+                     }}
+                  >
+                     <Header />
+                     <Box component='main' flexGrow={1} ref={animationParent}>
+                        {children}
+                     </Box>
+                     <Footer />
+                  </Container>
+               </UserContextProvider>
+            </WSProvider>
             <ToastContainer autoClose={2000} hideProgressBar theme='colored' />
          </ErrorBoundary>
       </ThemeProvider >

@@ -8,7 +8,8 @@ const PAGE_LINKS = [
   { title: 'Home', href: '/' },
   { title: 'My posts', href: '/myposts' },
   { title: 'About', href: '/about' },
-  { title: 'News', href: '/news' }
+  { title: 'News', href: '/news' },
+  { title: 'WS', href: '/ws' }
 ]
 
 export default function Header() {
