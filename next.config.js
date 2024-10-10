@@ -14,10 +14,10 @@ const securityHeaders = [
   },
   { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
   { key: 'Referrer-Policy', value: 'no-referrer' },
-  {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains'
-  },
+  // {
+  //   key: 'Strict-Transport-Security',
+  //   value: 'max-age=31536000; includeSubDomains'
+  // },
   { key: 'Expect-CT', value: 'enforce, max-age=86400' },
   {
     key: 'Content-Security-Policy',
