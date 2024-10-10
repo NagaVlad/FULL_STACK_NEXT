@@ -24,7 +24,7 @@ export default async function MyPostPage({ params: { id } }: { params: { id: str
       <Box py={2}>
         <Card>
           <CardHeader
-            avatar={<Avatar src={'/img/user.png'} />}
+            // avatar={<Avatar src={'public/img/user.png'} />}
             action={
               <Link href='/myposts'>
                 <Button aria-label='return to about page'>
@@ -65,7 +65,7 @@ export default async function MyPostPage({ params: { id } }: { params: { id: str
 
 async function getPost(id: string) {
   try {
-    const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+    const res = await fetch(`${process.env.SERVER_URL}posts/${id}`, {
       method: 'GET',
       next: { tags: ['onePosts'] }
     })

@@ -65,7 +65,7 @@ export async function generateMetadata() {
 async function getData() {
   const { signal } = new AbortController();
 
-  const res = await fetch(`http://localhost:5000/api/posts`, {
+  const res = await fetch(`${process.env.SERVER_URL}posts`, {
     method: 'GET',
     cache: 'no-store', //!
     // next: { revalidate: 0 }

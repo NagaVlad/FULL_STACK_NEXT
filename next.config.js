@@ -47,20 +47,21 @@ const nextConfig = {
     // ignoreBuildErrors: true,
   },
   env: {
-    PUBLIC_URL: '/',
+    // PUBLIC_URL: '/',
+    SERVER_URL: process.env.SERVER_URL,
   },
   reactStrictMode: false,
   images: {
 
-    domains: ['localhost', 'images.unsplash.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'localhost',
-        port: '5000',
-        pathname: 'http/localhost:5000/**',
-      },
-    ],
+    domains: ['localhost', 'images.unsplash.com', process.env.SERVER_URL_STATIC],
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'localhost',
+    //     port: '5000',
+    //     pathname: 'http/localhost:5000/**',
+    //   },
+    // ],
   },
   async headers() {
     return [

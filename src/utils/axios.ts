@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-export const API_URL = 'http://localhost:5000/api/'
-export const API_URL_STATIC = 'http://localhost:5000/'
+// export const SERVER_URL = 'http://localhost:5000/api/'
+// export const SERVER_URL_STATIC = 'http://localhost:5000/'
 
 export const axiosApi = axios.create({
    withCredentials: true,
-   baseURL: API_URL
+   baseURL: process.env.SERVER_URL
 });
 
 axiosApi.interceptors.request.use(async (config) => {
@@ -24,10 +24,10 @@ axiosApi.interceptors.response.use((config) => {
    const originalRequest = err.config
 
 
-   if (err.response?.status === 401 && err.request.responseURL !== `${API_URL}/refresh`) {
+   if (err.response?.status === 401 && err.request.responseURL !== `${process.env.SERVER_URL}/refresh`) {
 
       try {
-         const result = await axios.get(`${API_URL}/refresh`, {
+         const result = await axios.get(`${process.env.SERVER_URL}/refresh`, {
             withCredentials: true
          })
 

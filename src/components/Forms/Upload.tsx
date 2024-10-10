@@ -2,7 +2,7 @@ import { useCheckAuth } from '@/utils/swr'
 import { Box, Button, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
 import FormFieldsWrapper from './Wrapper'
-import axiosApi, { API_URL_STATIC } from '@/utils/axios'
+import axiosApi from '@/utils/axios'
 import Image from 'next/image'
 
 type Props = {
@@ -73,7 +73,7 @@ export default function UploadForm({ closeModal }: Props) {
           <label htmlFor='avatar'>
             <Button component='span'>Choose file</Button>
           </label>
-          <Image alt='preview' width={50} height={50} ref={previewRef} src={`${API_URL_STATIC}/${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/1727466258624.png'}`} />
+          <Image alt='preview' width={50} height={50} ref={previewRef} src={`${process.env.SERVER_URL_STATIC}/${userData?.avatarUrl ? userData?.avatarUrl.substr(1) : '/1727466258624.png'}`} />
           <Button
             type='submit'
             variant='contained'
