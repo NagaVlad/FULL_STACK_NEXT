@@ -21,8 +21,7 @@ jobs:
             ssh-add ~/.ssh/id_ed25519
             git pull
             git status
-            # export PATH="$PATH:/home/${{ secrets.SSH_USERNAME }}/.nvm/versions/node/v22.9.0/bin/pm2:/home/***/.nvm/versions/node/v22.9.0/bin/pm2"
-            export PATH="$PATH/home/${{ secrets.SSH_USERNAME }}/.nvm/versions/node/v22.9.0/bin:/usr/bin:/bin";
+            export PATH="$PATH:/home/${{ secrets.SSH_USERNAME }}/.nvm/versions/node/v22.9.0/bin/pm2"
             npm install
             rm -rf .next
             npm run build
