@@ -21,8 +21,8 @@ jobs:
             ssh-add ~/.ssh/id_rsa
             git pull origin main
             git status
-            export PATH=/home/${{ secrets.SSH_USERNAME }}/.nvm/versions/node/v22.9.0/bin:/usr/bin:/bin;
-            npm install
-            rm -rf .next
-            npm run build
-            pm2 restart FULL_STACK_NEXT
+            # export PATH=/home/${{ secrets.SSH_USERNAME }}/.nvm/versions/node/v22.9.0/bin:/usr/bin:/bin;
+            # npm install
+            # rm -rf .next
+            # npm run build
+            # pm2 restart FULL_STACK_NEXT
