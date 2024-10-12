@@ -21,7 +21,8 @@ jobs:
             ssh-add ~/.ssh/id_ed25519
             git pull
             git status
-            export PATH=$PATH:~/.nvm/versions/node/v22.9.0/bin/npm
+            # export PATH=$PATH:~/.nvm/versions/node/v22.9.0/bin/npm
+            export PATH=~/.nvm/versions/node/v22.9.0/bin/npm
             npm install
             # rm -rf .next
             # npm run build
