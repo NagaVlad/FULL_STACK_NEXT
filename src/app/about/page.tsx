@@ -20,7 +20,7 @@ export default function About() {
         quod consequuntur aliquid illo commodi ducimus id tenetur ea molestiae
         suscipit itaque assumenda ex. Expedita rem architecto itaque, ad
         voluptate nesciunt nisi veniam modi cupiditate, amet id velit deserunt
-        soluta? Ex, voluptate libero.
+        soluta? Ex, voluptate libero. Lorem test!
       </Typography>
     </>
   )
