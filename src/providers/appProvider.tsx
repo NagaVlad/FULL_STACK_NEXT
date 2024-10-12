@@ -23,25 +23,25 @@ export default function MyAppProvider({ children }: {
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
          >
-            <WSProvider>
-               <UserContextProvider>
-                  <Container
-                     maxWidth='xl'
-                     sx={{
-                        minHeight: '100vh',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        overflow: 'hidden'
-                     }}
-                  >
-                     <Header />
-                     <Box component='main' flexGrow={1} ref={animationParent}>
-                        {children}
-                     </Box>
-                     <Footer />
-                  </Container>
-               </UserContextProvider>
-            </WSProvider>
+            {/* <WSProvider> */}
+            <UserContextProvider>
+               <Container
+                  maxWidth='xl'
+                  sx={{
+                     minHeight: '100vh',
+                     display: 'flex',
+                     flexDirection: 'column',
+                     overflow: 'hidden'
+                  }}
+               >
+                  <Header />
+                  <Box component='main' flexGrow={1} ref={animationParent}>
+                     {children}
+                  </Box>
+                  <Footer />
+               </Container>
+            </UserContextProvider>
+            {/* </WSProvider> */}
             <ToastContainer autoClose={2000} hideProgressBar theme='colored' />
          </ErrorBoundary>
       </ThemeProvider >
