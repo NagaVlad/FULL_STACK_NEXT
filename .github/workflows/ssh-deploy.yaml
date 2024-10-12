@@ -22,7 +22,8 @@ jobs:
             git pull
             git status
             export PATH=~/.nvm/versions/node/v22.9.0/bin:/usr/bin:/bin;
-            npm install
+            pm2 stop CLIENT
             rm -rf .next
+            npm install
             npm run build
             pm2 restart CLIENT
