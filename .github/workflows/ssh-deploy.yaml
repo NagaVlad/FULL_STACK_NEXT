@@ -16,6 +16,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            echo ${{ secrets.SSH_USERNAME }}
+            echo${{ secrets.SSH_PRIVATE_KEY }}
             cd myproject/FULL_STACK_NEXT
             # eval `ssh-agent -s`
             # ssh-add ~/.ssh/id_rsa
